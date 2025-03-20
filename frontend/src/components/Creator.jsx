@@ -12,10 +12,10 @@ function Creator() {
   const fetchData = async () => {
     try {
         const token = localStorage.getItem('token');
-        const res = await UserService.getBlogsByAdmin(token);
+        const res = await UserService.getBlogsByCreator(token);
         const data = await res.json();
         console.log(data);
-        setBlogs(data.allBlogsByAdmin);
+        setBlogs(data.allBlogsByCreator);
     } catch (err) {
         console.error("Error fetching data:", err);
     }
@@ -26,8 +26,8 @@ function Creator() {
       toast.error('You need to login first');
       setRedirect('/login');
     }
-    else if (!UserService.isAdmin()) {
-      toast.error('You are not an Admin');
+    else if (!UserService.isCreator()) {
+      toast.error('You are not a Creator');
       setRedirect('/');
     }
 

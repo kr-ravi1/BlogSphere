@@ -76,8 +76,8 @@ public class CreatorController {
         try{
             String username = authenticationService.getCurrentUsername();
             User user = userRepo.findByEmail(username).orElseThrow();
-            List<BlogDTO> allBlogs = blogService.getAllBlogsByAdmin(user.getId());
-            response.setAllBlogsByAdmin(allBlogs);
+            List<BlogDTO> allBlogs = blogService.getAllBlogsByCreator(user.getId());
+            response.setAllBlogsByCreator(allBlogs);
             response.setMessage("Blogs fetched successfully");
             return ResponseEntity.status(HttpStatus.OK).body(response);
         }

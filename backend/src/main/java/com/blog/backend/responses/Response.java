@@ -1,6 +1,7 @@
 package com.blog.backend.responses;
 
 import com.blog.backend.dto.BlogDTO;
+import com.blog.backend.dto.UserDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -22,13 +23,33 @@ public class Response {
 
     private Role role;
     private String message;
-    private User user;
+    private UserDTO user;
     private Long blogId;
     private String title;
     private String date;
     private String content;
 
     private Boolean isOwner;
+
+    private Boolean subscribed;
+
+    public Boolean getSubscribed() {
+        return subscribed;
+    }
+
+    public void setSubscribed(Boolean subscribed) {
+        this.subscribed = subscribed;
+    }
+
+    private List<UserDTO> allUsers;
+
+    public List<UserDTO> getAllUsers() {
+        return allUsers;
+    }
+
+    public void setAllUsers(List<UserDTO> allUsers) {
+        this.allUsers = allUsers;
+    }
 
     public Boolean getOwner() {
         return isOwner;
@@ -82,14 +103,14 @@ public class Response {
 
     private String expirationTime;
 
-    private List<BlogDTO> allBlogsByAdmin;
+    private List<BlogDTO> allBlogsByCreator;
 
-    public List<BlogDTO> getAllBlogsByAdmin() {
-        return allBlogsByAdmin;
+    public List<BlogDTO> getAllBlogsByCreator() {
+        return allBlogsByCreator;
     }
 
-    public void setAllBlogsByAdmin(List<BlogDTO> allBlogsByAdmin) {
-        this.allBlogsByAdmin = allBlogsByAdmin;
+    public void setAllBlogsByCreator(List<BlogDTO> allBlogsByCreator) {
+        this.allBlogsByCreator = allBlogsByCreator;
     }
 
     public String getExpirationTime() {
@@ -118,11 +139,11 @@ public class Response {
         this.message = message;
     }
 
-    public User getUser() {
+    public UserDTO getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserDTO user) {
         this.user = user;
     }
 

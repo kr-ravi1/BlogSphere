@@ -1,5 +1,6 @@
 package com.blog.backend.controllers;
 
+import com.blog.backend.dto.UserDTO;
 import com.blog.backend.models.User;
 import com.blog.backend.repositories.UserRepo;
 import com.blog.backend.requests.LoginRequest;
@@ -52,7 +53,8 @@ public class AuthController {
             user.setCity(registerRequest.getCity());
             User userResult = userRepo.save(user);
             if (userResult.getId()>0) {
-                resp.setUser((userResult));
+                UserDTO userDTO = new UserDTO(user.getId(), user.getName(), user.getEmail(), user.getCity(), user.getRole(), user.isSubscribed());
+                resp.setUser(userDTO);
                 resp.setMessage("User Saved Successfully");
                 return ResponseEntity.status(HttpStatus.CREATED).body(resp);
             }
@@ -79,7 +81,7 @@ public class AuthController {
             var jwt = jwtUtils.generateToken(user);
             var refreshToken = jwtUtils.generateRefreshToken(new HashMap<>(), user);
             response.setToken(jwt);
-            response.setRole(user.getRole());
+            response.setUser(new UserDTO(user.getId(), user.getName(), user.getEmail(), user.getCity(), user.getRole(), user.isSubscribed()));
             response.setRefreshToken(refreshToken);
             response.setExpirationTime("24Hrs");
             response.setMessage("Successfully Logged In");

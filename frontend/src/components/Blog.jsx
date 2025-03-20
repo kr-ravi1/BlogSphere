@@ -9,6 +9,7 @@ function Blog() {
     const navigate = useNavigate();
     const { blogId } = useParams();
     const token = localStorage.getItem('token');
+    const [isAdmin, setIsAdmin] = useState(UserService.isAdmin());
     const [blog, setBlog] = useState({
         blogId: '',
         title: '',
@@ -37,6 +38,7 @@ function Blog() {
     };
 
     useEffect(() => {
+        setIsAdmin(UserService.isAdmin());
         fetchData();
     }, []);
 
@@ -69,11 +71,11 @@ function Blog() {
                     <div className='flex flex-row justify-between'>
                         <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">{blog.title}</h5>
                         <div className='flex flex-row gap-3 justify-center items-center'>
-                            {blog.isOwner && <span title='Edit' className='cursor-pointer' onClick={handleEdit}><svg className="w-6 h-6 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            {(blog.isOwner || isAdmin) && <span title='Edit' className='cursor-pointer' onClick={handleEdit}><svg className="w-6 h-6 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z" />
                             </svg>
                             </span>}
-                            {blog.isOwner && <span title='Delete' className='cursor-pointer' onClick={handleDelete}><svg className="w-6 h-6 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            {(blog.isOwner || isAdmin) && <span title='Delete' className='cursor-pointer' onClick={handleDelete}><svg className="w-6 h-6 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z" />
                             </svg>
                             </span>}

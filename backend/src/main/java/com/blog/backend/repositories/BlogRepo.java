@@ -20,4 +20,7 @@ public interface BlogRepo extends JpaRepository<Blog, Long> {
 
    @Query("SELECT b FROM Blog b")
    List<Blog> getAllBlogs();
+
+   @Query(value = "SELECT * FROM Blog ORDER BY RAND() LIMIT 1", nativeQuery = true)
+   Blog getRandomBlog();
 }

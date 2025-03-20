@@ -84,7 +84,7 @@ class UserService {
         }
     }
 
-    static async getBlogsByAdmin(token) {
+    static async getBlogsByCreator(token) {
         try {
             const response = await fetch(`${UserService.BASE_URL}/creator`, {
                 method: "GET",
@@ -132,10 +132,75 @@ class UserService {
         }
     }
 
+    static async getAllUsers(token) {
+        try {
+            const response = await fetch(`${UserService.BASE_URL}/admin/allUsers`, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+            });
+
+            return response;
+        }
+        catch(err) {
+            throw err;
+        }
+    }
+
+    static async addSubscriber(token, email) {
+        try{
+            const response = await fetch(`${UserService.BASE_URL}/subscriber/add/${email}`, {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                },
+            });
+            return response;
+        }
+        catch(err) {
+            throw err;
+        }
+    }
+
+    static async removeSubscriber(token, email) {
+        try{
+            const response = await fetch(`${UserService.BASE_URL}/subscriber/remove/${email}`, {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                },
+            });
+            return response;
+        }
+        catch(err) {
+            throw err;
+        }
+    }
+
+    static async getSubscriberStatus(token, email) {
+        try{
+            const response = await fetch(`${UserService.BASE_URL}/subscriber/status/${email}`, {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            return response;
+        }
+        catch(err) {
+            throw err;
+        }
+    }
+
     /**AUTHENTICATION CHECKER */
     static logout(){
         localStorage.removeItem('token')
         localStorage.removeItem('role')
+        localStorage.removeItem('email')
+        localStorage.removeItem('subscribed')
     }
 
     static isAuthenticated(){
@@ -143,9 +208,14 @@ class UserService {
         return !!token
     }
 
-    static isAdmin(){
+    static isCreator(){
         const role = localStorage.getItem('role')
         return role === 'CREATOR';
+    }
+
+    static isAdmin(){
+        const role = localStorage.getItem('role')
+        return role === 'ADMIN';
     }
 
     static isUser(){
@@ -153,8 +223,12 @@ class UserService {
         return role === 'USER'
     }
 
-    static adminOnly(){
-        return this.isAuthenticated() && this.isAdmin();
+    static creatorOnly(){
+        return this.isAuthenticated() && this.isCreator();
+    }
+
+    static isSubscribed() {
+        return localStorage.getItem('subscribed') === "true";
     }
 }
 

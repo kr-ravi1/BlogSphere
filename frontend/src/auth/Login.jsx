@@ -30,10 +30,12 @@ function Login() {
         password: '',
       })
       const data = await res.json();
+      console.log(data);
       if (res.status === 200) {
         localStorage.setItem('token', data.token)
-        localStorage.setItem('role', data.role)
-        localStorage.setItem('userId', data.userId)
+        localStorage.setItem('role', data.user.role)
+        localStorage.setItem('email', data.user.email)
+        localStorage.setItem('subscribed', data.user.subscribed)
         toast.success(data.message);
         navigate('/');
       }

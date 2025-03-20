@@ -16,6 +16,7 @@ function Home() {
         const res = await UserService.getBlogs(token);
 
         const data = await res.json();
+        console.log(data);
         setBlogs(data.allBlogs);
     } catch (err) {
         console.error("Error fetching data:", err);

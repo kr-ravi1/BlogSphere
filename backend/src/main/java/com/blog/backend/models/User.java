@@ -26,6 +26,16 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Blog> blogs;
 
+    private boolean subscribed = false;
+
+    public boolean isSubscribed() {
+        return subscribed;
+    }
+
+    public void setSubscribed(boolean subscribed) {
+        this.subscribed = subscribed;
+    }
+
     public List<Blog> getBlogs() {
         return blogs;
     }

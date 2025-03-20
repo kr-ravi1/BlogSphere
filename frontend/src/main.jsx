@@ -12,6 +12,7 @@ import Blog from './components/Blog';
 import ManageBlog from './components/ManageBlog';
 import Logout from './components/Logout';
 import Error from './components/Error';
+import AllUsers from './components/AllUsers';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -25,6 +26,7 @@ const router = createBrowserRouter(
       <Route path="blog/add" element={<ManageBlog/>} />
       <Route path="blog/edit/:blogId" element={<ManageBlog/>} />
       <Route path="*" element={<Error/>} />
+      <Route path="admin/allUsers" element={<AllUsers/>} />
     </Route>
   )
 )

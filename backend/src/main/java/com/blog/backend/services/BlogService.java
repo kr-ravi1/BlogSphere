@@ -13,11 +13,13 @@ public interface BlogService {
 
 //   List<Blog> getAllBlogsUser(Long userId);
 
-    List<BlogDTO> getAllBlogsByAdmin(Long userId);
+    List<BlogDTO> getAllBlogsByCreator(Long userId);
 
     Optional<Blog> getBlogById(long id);
 
     List<BlogDTO> getAllBlogs();
 
     boolean deleteBlogById(long id);
+
+    BlogDTO getRandomBlog();
 }

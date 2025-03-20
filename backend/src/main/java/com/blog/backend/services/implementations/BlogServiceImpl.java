@@ -23,7 +23,7 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public List<BlogDTO> getAllBlogsByAdmin(Long userId) {
+    public List<BlogDTO> getAllBlogsByCreator(Long userId) {
         return blogRepo.getAllBlogsByAdmin(userId).stream()
                 .map(blog -> new BlogDTO(blog.getId(), blog.getTitle(), blog.getDate(), truncateContent(blog.getContent(), 20)))
                 .collect(Collectors.toList());
@@ -40,6 +40,13 @@ public class BlogServiceImpl implements BlogService {
         } catch (EmptyResultDataAccessException e) {
             return false; // Return false if the blog does not exist
         }
+    }
+
+    @Override
+    public BlogDTO getRandomBlog() {
+        Blog blog = blogRepo.getRandomBlog();
+        BlogDTO blog1 = new BlogDTO(blog.getId(), blog.getTitle(), blog.getDate(), blog.getContent());
+        return blog1;
     }
 
     private String truncateContent(String content, int wordLimit) {

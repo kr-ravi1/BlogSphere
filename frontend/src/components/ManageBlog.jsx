@@ -20,8 +20,8 @@ function ManageBlog() {
         if (!localStorage.getItem('token')) {
             toast.error('You need to login first');
             setRedirect('/login');
-        } else if (!UserService.isAdmin()) {
-            toast.error('You are not an Admin');
+        } else if (!UserService.isCreator()) {
+            toast.error('You are not a Creator');
             setRedirect('/');
         } else if (blogId) {
             fetchBlogDetails();
